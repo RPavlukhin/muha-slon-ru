@@ -46,6 +46,11 @@ int main(int argc, char *argv[])
     string startword = argv[2];
     string finword = argv[3];
 
+	// проверяем, есть ли начальное и конечное слова в словаре
+	if (dict.find(startword)==dict.end()) cerr << "Начального слова нет в словаре!" << endl;
+	if (dict.find(finword)==dict.end()) cerr << "Конечного слова нет в словаре!" << endl;
+
+
     WordRouter wr(dict);
    // строим маршрут
    std::list <string> route;
@@ -56,6 +61,9 @@ int main(int argc, char *argv[])
     {
         cout << *it << endl;
     }
+	
+   if (route.empty()) cout << "В словаре не найдено корректной цепочки между словами"<<endl;
+
     return res;
 }
 
