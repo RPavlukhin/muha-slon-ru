@@ -24,9 +24,9 @@ bool WordRouter::isDiffOneLetter(string  firstWord, string  secondWord)
         //Каждый символ из первого слова сравниваем с соотвествующим ему из второго слова.
         int pos = 0;
         int ndiff = 0;
-        for (auto s : firstWord)
+		for (auto i = firstWord.begin(); i!=firstWord.end(); ++i)
         {
-            if (s!=secondWord[pos])
+            if ((*i)!=secondWord[pos])
             {
                 ndiff++;
             }
@@ -72,15 +72,17 @@ std::vector<Branch> WordRouter::Mutate( Branch & inbranch)
 
 
     //Обходим все полученные варианты
-    for (auto elem:allvar)
+	std::string str_tmp;
+	for (auto it = allvar.begin(); it != allvar.end(); ++it)
     {
        //Проверяем, что слово еще не использовалось
-       if (!inbranch.isUsed(elem))
+		str_tmp = (*it);
+		if (!inbranch.isUsed(str_tmp))
        {
           //создаем новую ветвь
           Branch tmp(inbranch);
           //добавляем в "голову" истории изменений новой ветви это слово
-          tmp.AddToHistory(elem);
+          tmp.AddToHistory(str_tmp);
           // добавляем новую ветвь в вектор
           brs.push_back(tmp);
        }

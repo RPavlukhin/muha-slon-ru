@@ -16,7 +16,7 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    setlocale(0, "");
+    setlocale(LC_ALL, "rus");
 
    if (argc!=3) {
         cout << "Заданы неверные параметры! Верный синтаксис: muhoslon [путь к файлу настроек] [путь к словарю]" << endl;
@@ -63,9 +63,9 @@ int main(int argc, char *argv[])
    int res = wr.CreateRoute(startword,finword,route);
 
     // выводим его на экран
-    for (string & elem: route)
+   for (auto it = route.begin(); it !=route.end(); ++it)
     {
-        cout << elem << endl;
+        cout << *it << endl;
     }
     return res;
 }
