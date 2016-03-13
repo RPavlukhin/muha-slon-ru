@@ -18,28 +18,16 @@ int main(int argc, char *argv[])
 {
     setlocale(0, "");
 
-   if (argc!=3) {
-        cout << "Заданы неверные параметры! Верный синтаксис: muhoslon [путь к файлу настроек] [путь к словарю]" << endl;
+   if (argc!=4) {
+        cout << "Заданы неверные параметры! Верный синтаксис: [имя бинарника] [путь к словарю] [первое слово] [последнее слово]" << endl;
         return EXIT_FAILURE;
     }    
 
     set <string> dict;
-    string startword, finword;
-    ifstream dictfile, conffile;
-
-    // открываем файл с начальным и конечным словами
-    conffile.open (argv[1],ios::in);
-    if(!conffile) {
-        std::cerr<<"Ошибка при открытии файла"<< conffile << endl;
-        return EXIT_FAILURE;
-    }
-    // заносим значенияв переменные
-    std::getline (conffile,startword);
-    std::getline (conffile,finword);
-    conffile.close();
+    ifstream dictfile;
 
     // открываем файл со словарем
-    dictfile.open (argv[2], std::ios::in);
+    dictfile.open (argv[1], std::ios::in);
     if(!dictfile) {
         std::cerr<<"Ошибка при открытии файла"<< dictfile <<endl;
         return EXIT_FAILURE;
@@ -54,8 +42,9 @@ int main(int argc, char *argv[])
         }
     dictfile.close();
 
-
-
+    // считываем из консоли заданное первое и последнее слово
+    string startword = argv[2];
+    string finword = arg[3];
 
     WordRouter wr(dict);
    // строим маршрут
