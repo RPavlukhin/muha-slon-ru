@@ -47,8 +47,15 @@ int main(int argc, char *argv[])
     string finword = argv[3];
 
 	// проверяем, есть ли начальное и конечное слова в словаре
-	if (dict.find(startword)==dict.end()) cerr << "Начального слова нет в словаре!" << endl;
-	if (dict.find(finword)==dict.end()) cerr << "Конечного слова нет в словаре!" << endl;
+	if (dict.find(startword)==dict.end()) {
+		cerr << "Начального слова нет в словаре!" << endl;
+		return EXIT_FAILURE;
+	}
+	if (dict.find(finword)==dict.end()) 
+	{
+		cerr << "Конечного слова нет в словаре!" << endl;
+		return EXIT_FAILURE;
+	}
 
 
     WordRouter wr(dict);

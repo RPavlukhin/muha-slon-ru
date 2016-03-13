@@ -77,7 +77,7 @@ std::vector<Branch> WordRouter::Mutate( Branch & inbranch)
     {
        //Проверяем, что слово еще не использовалось
 		str_tmp = (*it);
-		if (!inbranch.isUsed(str_tmp))
+		if (!this->isUsed(str_tmp) && !inbranch.isUsed(str_tmp))
        {
           //создаем новую ветвь
           Branch tmp(inbranch);
@@ -85,6 +85,8 @@ std::vector<Branch> WordRouter::Mutate( Branch & inbranch)
           tmp.AddToHistory(str_tmp);
           // добавляем новую ветвь в вектор
           brs.push_back(tmp);
+		  // добавляем слово в список уже использованных
+		  this->AddToUsed(str_tmp);
        }
     }
     return brs;
@@ -130,3 +132,23 @@ int WordRouter::CreateRoute(string stword, string fword, std::list<string> & wor
 {
     return CreateRoute(this->dictOrigin_,stword,fword,words);
 }
+
+
+
+/**
+
+bool isUsed(std::string & word);
+**/
+
+	// добавляет в список уже использованных слов
+	bool WordRouter::AddToUsed(std::string & word)
+	{
+		auto ret = this->UsedWords_.insert(word);
+		return ret.second;
+	}
+
+	// проверяет, есть ли слово в списке использованных
+	bool WordRouter::isUsed(std::string & word)
+	{
+		return (UsedWords_.find(word)!=UsedWords_.end()) ;
+	}

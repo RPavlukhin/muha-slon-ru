@@ -83,6 +83,20 @@ private:
      */
     std::vector<Branch> Mutate(Branch & inbranch);
 
+	/**
+	*
+	*
+	*
+	*/
+	bool isUsed(std::string & word);
+
+
+	/**
+	*
+	*/
+	bool AddToUsed(std::string & word);
+
+
     /**
      * @brief dictTemp_ - временное множество. В него вносятся лишь слова, равные по длине стартовому в цепочке.
      */
@@ -92,6 +106,8 @@ private:
      * @brief dictOrigin_ - ссылка на первоначальное множество, содержащее все слова.
      */
     set <string> dictOrigin_;
+
+	set <string> UsedWords_;
 
 };
 
