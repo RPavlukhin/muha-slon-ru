@@ -44,11 +44,11 @@ int main(int argc, char *argv[])
 
     // считываем из консоли заданное первое и последнее слово
     string startword = argv[2];
-    string finword = arg[3];
+    string finword = argv[3];
 
     WordRouter wr(dict);
    // строим маршрут
-   list <string> route;
+   std::list <string> route;
    int res = wr.CreateRoute(startword,finword,route);
 
     // выводим его на экран
