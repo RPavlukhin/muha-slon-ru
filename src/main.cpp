@@ -19,17 +19,17 @@ int main(int argc, char *argv[])
     setlocale(LC_ALL, "rus");
 
    if (argc!=4) {
-        cout << "Р—Р°РґР°РЅС‹ РЅРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹! Р’РµСЂРЅС‹Р№ СЃРёРЅС‚Р°РєСЃРёСЃ: [РёРјСЏ Р±РёРЅР°СЂРЅРёРєР°] [РїСѓС‚СЊ Рє СЃР»РѕРІР°СЂСЋ] [РїРµСЂРІРѕРµ СЃР»РѕРІРѕ] [РїРѕСЃР»РµРґРЅРµРµ СЃР»РѕРІРѕ]" << endl;
+        std::wcerr << L"Заданы неверные параметры! Верный синтаксис: [имя бинарника] [путь к словарю] [первое слово] [последнее слово]" << endl;
         return EXIT_FAILURE;
     }    
 
     set <string> dict;
     ifstream dictfile;
 
-    // РѕС‚РєСЂС‹РІР°РµРј С„Р°Р№Р» СЃРѕ СЃР»РѕРІР°СЂРµРј
+    // открываем файл со словарем
     dictfile.open (argv[1], std::ios::in);
     if(!dictfile) {
-        std::cerr<<"РћС€РёР±РєР° РїСЂРё РѕС‚РєСЂС‹С‚РёРё С„Р°Р№Р»Р°"<< dictfile <<endl;
+        std::wcerr<<L"Ошибка при открытии файла"<< dictfile <<endl;
         return EXIT_FAILURE;
     }
 
@@ -37,39 +37,47 @@ int main(int argc, char *argv[])
     while (!dictfile.eof())
         {
          std::getline(dictfile,tmp);
-         //РґРѕР±Р°РІР»СЏРµРј РІ СЃР»РѕРІР°СЂСЊ
+         //добавляем в словарь
          if (!tmp.empty()) dict.insert(tmp);
         }
     dictfile.close();
 
-    // СЃС‡РёС‚С‹РІР°РµРј РёР· РєРѕРЅСЃРѕР»Рё Р·Р°РґР°РЅРЅРѕРµ РїРµСЂРІРѕРµ Рё РїРѕСЃР»РµРґРЅРµРµ СЃР»РѕРІРѕ
+    // считываем из консоли заданное первое и последнее слово
     string startword = argv[2];
     string finword = argv[3];
 
-	// РїСЂРѕРІРµСЂСЏРµРј, РµСЃС‚СЊ Р»Рё РЅР°С‡Р°Р»СЊРЅРѕРµ Рё РєРѕРЅРµС‡РЅРѕРµ СЃР»РѕРІР° РІ СЃР»РѕРІР°СЂРµ
+	//проверяем, одинаковой ил длины слова
+	if (startword.length()!=finword.length()) 
+	{
+		wcerr << L"Слова различной длины!" << endl;
+		return EXIT_FAILURE;
+	}
+
+	// проверяем, есть ли начальное и конечное слова в словаре
 	if (dict.find(startword)==dict.end()) {
-		cerr << "РќР°С‡Р°Р»СЊРЅРѕРіРѕ СЃР»РѕРІР° РЅРµС‚ РІ СЃР»РѕРІР°СЂРµ!" << endl;
+		wcerr << L"ПЕРВОГО слова НЕТ в словаре!" << endl;
 		return EXIT_FAILURE;
 	}
 	if (dict.find(finword)==dict.end()) 
 	{
-		cerr << "РљРѕРЅРµС‡РЅРѕРіРѕ СЃР»РѕРІР° РЅРµС‚ РІ СЃР»РѕРІР°СЂРµ!" << endl;
+		wcerr << L"ВТОРОГО слова НЕТ в словаре!" << endl;
 		return EXIT_FAILURE;
 	}
 
 
     WordRouter wr(dict);
-   // СЃС‚СЂРѕРёРј РјР°СЂС€СЂСѓС‚
+   // строим маршрут
    std::list <string> route;
    int res = wr.CreateRoute(startword,finword,route);
+   
 
-    // РІС‹РІРѕРґРёРј РµРіРѕ РЅР° СЌРєСЂР°РЅ
+    // выводим его на экран
    for (auto it = route.begin(); it !=route.end(); ++it)
     {
         cout << *it << endl;
     }
 	
-   if (route.empty()) cout << "Р’ СЃР»РѕРІР°СЂРµ РЅРµ РЅР°Р№РґРµРЅРѕ РєРѕСЂСЂРµРєС‚РЅРѕР№ С†РµРїРѕС‡РєРё РјРµР¶РґСѓ СЃР»РѕРІР°РјРё"<<endl;
+   if (route.empty()) wcout << L"В словаре не найдено корректной цепочки между словами"<<endl;
 
     return res;
 }
