@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
     setlocale(LC_ALL, "rus");
 
    if (argc!=4) {
-        std::wcerr << L"Заданы неверные параметры! Верный синтаксис: [имя бинарника] [путь к словарю] [первое слово] [последнее слово]" << endl;
+        std::wcerr << "Заданы неверные параметры! Верный синтаксис: [имя бинарника] [путь к словарю] [первое слово] [последнее слово]" << endl;
         return EXIT_FAILURE;
     }    
 
@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     // открываем файл со словарем
     dictfile.open (argv[1], std::ios::in);
     if(!dictfile) {
-        std::wcerr<<L"Ошибка при открытии файла"<< dictfile <<endl;
+        std::wcerr<<"Ошибка при открытии файла"<< dictfile <<endl;
         return EXIT_FAILURE;
     }
 
@@ -49,18 +49,18 @@ int main(int argc, char *argv[])
 	//проверяем, одинаковой ил длины слова
 	if (startword.length()!=finword.length()) 
 	{
-		wcerr << L"Слова различной длины!" << endl;
+        wcerr << "Слова различной длины!" << endl;
 		return EXIT_FAILURE;
 	}
 
 	// проверяем, есть ли начальное и конечное слова в словаре
 	if (dict.find(startword)==dict.end()) {
-		wcerr << L"ПЕРВОГО слова НЕТ в словаре!" << endl;
+        wcerr << "ПЕРВОГО слова НЕТ в словаре!" << endl;
 		return EXIT_FAILURE;
 	}
 	if (dict.find(finword)==dict.end()) 
 	{
-		wcerr << L"ВТОРОГО слова НЕТ в словаре!" << endl;
+        wcerr << "ВТОРОГО слова НЕТ в словаре!" << endl;
 		return EXIT_FAILURE;
 	}
 
@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
         cout << *it << endl;
     }
 	
-   if (route.empty()) wcout << L"В словаре не найдено корректной цепочки между словами"<<endl;
+   if (route.empty()) wcout << "В словаре не найдено корректной цепочки между словами"<<endl;
 
     return res;
 }

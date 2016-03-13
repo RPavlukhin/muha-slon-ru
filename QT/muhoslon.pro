@@ -3,9 +3,9 @@ CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
 QMAKE_CXXFLAGS += -std=c++11
-SOURCES += main.cpp \
-    wordrouter.cpp \
-    branch.cpp
+SOURCES += ../source/main.cpp \
+    ../source/wordrouter.cpp \
+    ../source/branch.cpp
 
 //QMAKE_LFLAGS        = --enable-stdcall-fixup -Wl,-enable-auto-import -Wl,-enable-runtime-pseudo-reloc
 //QMAKE_LFLAGS        = --static, -enable-stdcall-fixup -Wl,-enable-auto-import -Wl,-enable-runtime-pseudo-reloc
@@ -17,5 +17,5 @@ include(deployment.pri)
 qtcAddDeployment()
 
 HEADERS += \
-    wordrouter.h \
-    branch.h
+    ../source/wordrouter.h \
+    ../source/branch.h
